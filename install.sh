@@ -50,7 +50,7 @@ done
 read -p "Email del administrador: " ADMIN_EMAIL
 
 SECRET_KEY=$(python3 -c "import secrets; print(secrets.token_urlsafe(50))")
-POSTGRES_PASSWORD=$(python3 -c "import secrets; print(secrets.token_urlsafe(20))")
+
 
 echo ""
 echo "✓ Datos recogidos"
@@ -64,7 +64,6 @@ ADMIN_USER=$ADMIN_USER
 ADMIN_PASSWORD=$ADMIN_PASSWORD
 ADMIN_EMAIL=$ADMIN_EMAIL
 SECRET_KEY=$SECRET_KEY
-POSTGRES_PASSWORD=$POSTGRES_PASSWORD
 EOF
 
 echo "✓ Configuración guardada en .env"
@@ -99,7 +98,7 @@ DATABASES = {
         "HOST": os.getenv('POSTGRES_HOST', 'db'),
         "PORT": os.getenv('POSTGRES_PORT', '5432'),
         "USER": os.getenv('POSTGRES_USER', 'mediacms'),
-        "PASSWORD": os.getenv('POSTGRES_PASSWORD', '${POSTGRES_PASSWORD}'),
+        "PASSWORD": os.getenv('POSTGRES_PASSWORD', 'mediacms'),
         "OPTIONS": {'pool': True},
     }
 }
@@ -221,7 +220,7 @@ services:
     restart: always
     environment:
       POSTGRES_USER: mediacms
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_PASSWORD: mediacms
       POSTGRES_DB: mediacms
       TZ: Europe/London
     healthcheck:
